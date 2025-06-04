@@ -1,2 +1,40 @@
+# Terraform state
+*.tfstate
+*.tfstate.*
 .terraform/
-*.exe
+terraform.tfvars
+terraform.tfvars.json
+crash.log
+
+# Terraform lock file (optional: keep if collaborating)
+.terraform.lock.hcl
+
+# Local environment files
+*.log
+*.backup
+*.bak
+
+# Visual Studio-specific
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Build artifacts (if building front-end too)
+dist/
+build/
+node_modules/
+.env
+
+# Azure CLI cache/config
+.azure/
+
+# Mac/Linux shell history files
+*.swp
+*.swo
+*.bash_history
