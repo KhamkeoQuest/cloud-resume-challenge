@@ -29,3 +29,8 @@ variable "error_path" {
   type        = string
   description = "Path to 404.html"
 }
+
+variable "resume_path" {
+  type        = string
+  description = "Path to resume.pdf"
+}
