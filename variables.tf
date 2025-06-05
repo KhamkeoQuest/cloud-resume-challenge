@@ -24,14 +24,17 @@ variable "tags" {
     dev = {
       environment = "dev"
       project     = "cloud-resume"
+      source      = "terraform"
     }
     stage = {
       environment = "stage"
       project     = "cloud-resume"
+      source      = "terraform"
     }
     prod = {
       environment = "prod"
       project     = "cloud-resume"
+      source      = "terraform"
     }
   }
 }
