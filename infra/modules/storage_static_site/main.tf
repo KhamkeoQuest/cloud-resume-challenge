@@ -4,6 +4,8 @@ resource "azurerm_storage_account" "static_site" {
   location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  account_kind             = "StorageV2"
+
 
   static_website {
     index_document     = "index.html"
@@ -11,6 +13,17 @@ resource "azurerm_storage_account" "static_site" {
   }
 
   tags = var.tags
+}
+module "static_site" {
+  source              = "./modules/storage_static_site"
+  project_name        = var.project_name
+  environment         = "prod"
+  resource_group_name = azurerm_resource_group.rg["prod"].name
+  location            = azurerm_resource_group.rg["prod"].location
+  tags                = var.tags["prod"]
+  index_path          = var.index_path
+  error_path          = var.error_path
+  resume_path         = var.resume_path
 }
 
 resource "azurerm_storage_container" "web" {
