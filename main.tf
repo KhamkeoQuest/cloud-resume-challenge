@@ -32,7 +32,8 @@ module "static_site" {
   resource_group_name = azurerm_resource_group.rg["prod"].name
   location            = azurerm_resource_group.rg["prod"].location
   tags                = var.tags["prod"]
-  index_path          = var.index_path
-  error_path          = var.error_path
-  resume_path         = var.resume_path
+  index_path          = local.index_path
+  error_path          = local.error_path
+  resume_path         = local.resume_path
 }
+

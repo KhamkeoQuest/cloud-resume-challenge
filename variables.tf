@@ -39,24 +39,10 @@ variable "tags" {
   }
 }
 
-variable "frontend_path" {
-  type        = string
-  description = "Base path to the frontend assets"
-  default     = "${path.module}/frontend"
-}
-variable "index_path" {
-  type        = string
-  description = "Path to index.html"
-  default     = "${var.frontend_path}/index.html"
-}
-variable "error_path" {
-  type        = string
-  description = "Path to 404.html"
-  default     = "${var.frontend_path}/404.html"
-}
-variable "resume_path" {
-  type        = string
-  description = "Path to resume.pdf"
-  default     = "${var.frontend_path}/khamkeo_khongsaly_resume.html"
-}
+locals {
+  frontend_path = "${path.module}/frontend"
 
+  index_path  = "${local.frontend_path}/index.html"
+  error_path  = "${local.frontend_path}/404.html"
+  resume_path = "${local.frontend_path}/khamkeo_khongsaly_resume.html"
+}

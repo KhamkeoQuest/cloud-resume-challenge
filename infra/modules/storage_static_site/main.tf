@@ -7,6 +7,7 @@ resource "azurerm_storage_account" "static_site" {
   account_kind             = "StorageV2"
 
 
+
   static_website {
     index_document     = "index.html"
     error_404_document = "404.html"
@@ -14,16 +15,13 @@ resource "azurerm_storage_account" "static_site" {
 
   tags = var.tags
 }
-resource "azurerm_storage_container" "web" {
-  name                  = "$web"
-  storage_account_name  = azurerm_storage_account.static_site.name
-  container_access_type = "blob"
-}
+
+
 
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
   storage_account_name   = azurerm_storage_account.static_site.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = "$web"
   type                   = "Block"
   source                 = var.index_path
 }
@@ -31,15 +29,15 @@ resource "azurerm_storage_blob" "index" {
 resource "azurerm_storage_blob" "error" {
   name                   = "404.html"
   storage_account_name   = azurerm_storage_account.static_site.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = "$web"
   type                   = "Block"
   source                 = var.error_path
 }
 
 resource "azurerm_storage_blob" "resume" {
-  name                   = "resume.pdf"
+  name                   = "khamkeo_khongsaly_resume.html"
   storage_account_name   = azurerm_storage_account.static_site.name
-  storage_container_name = azurerm_storage_container.web.name
+  storage_container_name = "$web"
   type                   = "Block"
   source                 = var.resume_path
 }

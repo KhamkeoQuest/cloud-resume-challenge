@@ -8,3 +8,6 @@ output "storage_account_name" {
   value       = azurerm_storage_account.static_site.name
 }
 
+output "web_container_name" {
+  value = "$web"
+}

@@ -32,5 +32,5 @@ variable "error_path" {
 
 variable "resume_path" {
   type        = string
-  description = "Path to resume.pdf"
+  description = "Path to khamkeo_khongsaly_resume.html"
 }
