@@ -11,6 +11,9 @@ tfplan
 # Terraform lock file (optional: keep if collaborating)
 .terraform.lock.hcl
 
+# Terraform explicit backup naming
+terraform.tfstate.backup
+
 # Local environment files
 *.log
 *.backup
@@ -40,3 +43,6 @@ node_modules/
 *.swp
 *.swo
 *.bash_history
+
+# Function packaging 
+*.zip
