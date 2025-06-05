@@ -8,8 +8,7 @@ variable "locations" {
   default = {
     dev   = "East US"
     stage = "Central US"
-    prod1 = "West US 3"
-    prod2 = "South Central US"
+    prod = "West US 3"
   }
 }
 

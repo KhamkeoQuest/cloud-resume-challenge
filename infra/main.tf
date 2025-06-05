@@ -15,14 +15,11 @@ resource "azurerm_resource_group" "rg" {
   for_each = {
     dev   = var.locations["dev"]
     stage = var.locations["stage"]
-    prod1 = var.locations["prod1"]
-    prod2 = var.locations["prod2"]
+    prod1 = var.locations["prod"]
   }
 
   name     = "rg-${var.project_name}-${each.key}"
   location = each.value
 
-  tags = lookup(var.tags, (
-    contains(["prod1", "prod2"], each.key) ? "prod" : each.key
-  ), {})
+  tags = lookup(var.tags, each.key, {})
 }
