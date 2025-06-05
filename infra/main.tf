@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "rg" {
   for_each = {
     dev   = var.locations["dev"]
     stage = var.locations["stage"]
-    prod1 = var.locations["prod"]
+    prod = var.locations["prod"]
   }
 
   name     = "rg-${var.project_name}-${each.key}"
