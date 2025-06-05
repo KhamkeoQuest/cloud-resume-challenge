@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "static_site" {
   tags = var.tags
 }
 module "static_site" {
-  source              = "./modules/storage_static_site"
+  source              = "./infra/modules/storage_static_site"
   project_name        = var.project_name
   environment         = "prod"
   resource_group_name = azurerm_resource_group.rg["prod"].name
