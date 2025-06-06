@@ -1,4 +1,4 @@
-# Cloud Resume Challenge (Azure + AWS DR) 
+# Cloud Resume Challenge (Azure HA + AWS DR) 
 
 Welcome to my **Cloud Resume Challenge** project, inspired by [Forrest Brazeal's](https://cloudresumechallenge.dev/) initiative. This is a **work in progress** that demonstrates deploying a static resume website using **Azure** as the primary infrastructure, with **AWS** configured for disaster recovery (DR).
 
@@ -54,8 +54,10 @@ infra/
 ├── modules/
 │   └── storage_static_site/
 ├── shared/
-└── aws-dr/               # Placeholder for DR resources
-frontend/
+└── aws-dr/               # DR resources in AWS
+frontend/                 # Static frontend (HTML/CSS/JS)
+diagram/                  # Architecture diagrams and notes
+```  
 
 ---
 
