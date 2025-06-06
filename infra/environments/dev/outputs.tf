@@ -12,5 +12,13 @@ output "web_container_name" {
 }
 
 output "debug_index_path" {
-  value = module.shared.index_path
+  value = local.index_path
+}
+
+output "debug_resume_exists" {
+  value = fileexists(local.resume_path)
+}
+
+output "resolved_resume_path" {
+  value = abspath(local.resume_path)
 }

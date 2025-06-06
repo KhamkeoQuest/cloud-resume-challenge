@@ -4,11 +4,11 @@ variable "environments" {
 }
 
 variable "locations" {
-  type    = map(string)
+  type = map(string)
   default = {
     dev   = "East US"
     stage = "Central US"
-    prod = "West US 3"
+    prod  = "West US 3"
   }
 }
 
@@ -18,7 +18,7 @@ variable "project_name" {
 }
 
 variable "tags" {
-  description = "Tag map per environment"
+  description = "Default tags per environment"
   type = map(map(string))
   default = {
     dev = {
@@ -38,4 +38,3 @@ variable "tags" {
     }
   }
 }
-
