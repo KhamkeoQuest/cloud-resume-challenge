@@ -62,6 +62,5 @@ diagram/                  # Architecture diagrams and notes
 ---
 
 Let me know:
-- When the CI/CD or AWS DR phase begins and we’ll update
-- If you'd like to include command snippets like `terraform plan -var-file=...` or GitHub Actions `.yaml` next
-- And whether you want your name or GitHub profile linked in the credits section!
+- If there is anything else I should be considering, that I haven't yet
+- This has actually ben a really fun project so far.
