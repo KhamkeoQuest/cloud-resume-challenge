@@ -46,17 +46,29 @@ Welcome to my **Cloud Resume Challenge** project, inspired by [Forrest Brazeal's
 ## Project Structure
 
 ```text
-infra/
-├── environments/
-│   ├── dev/
-│   ├── stage/
-│   └── prod/
-├── modules/
-│   └── storage_static_site/
-├── shared/
-└── aws-dr/               # DR resources in AWS
-frontend/                 # Static frontend (HTML/CSS/JS)
-diagram/                  # Architecture diagrams and notes
+├── frontend/                # Static frontend (HTML/CSS/JS)
+│   └── *.html
+├── infra/
+│   ├── environments/
+│   │   ├── dev/
+│   │   │   └── main.tf
+│   │   ├── stage/
+│   │   │   └── main.tf
+│   │   └── prod/
+│   │       └── main.tf
+│   ├── modules/
+│   │   ├── function_app/
+│   │   ├── storage_static_site/
+│   │   └── traffic_manager/
+│   └── shared/
+│       ├── providers.tf
+│       ├── locals.tf
+│       └── variables.tf
+├── .github/workflows/terraform.yml
+├── .gitignore
+└── README.md
+└── aws-dr/                   # DR resources in AWS
+└── diagram/                  # Architecture diagrams and notes
 ```  
 
 ---
