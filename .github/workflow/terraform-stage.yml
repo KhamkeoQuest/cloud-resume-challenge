@@ -1,0 +1,60 @@
+# GitHub Actions Workflow for Terraform Deployment to Dev Environment
+name: Terraform CI/CD - Dev
+
+on:
+  # 🚀 Trigger when code is pushed directly to the main branch
+  push:
+    branches:
+      - main
+
+  # 🔍 Trigger when a pull request is made targeting main branch
+  # Useful for running terraform plan for visibility (apply won't run unless merged)
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-dev:
+    name: 'Terraform Plan & Apply (Dev)'
+    runs-on: ubuntu-latest  # 🖥️ Use Ubuntu VM for running the workflow
+
+    env:
+      # 🔐 Set environment variables from GitHub secrets (ARM = Azure Resource Manager)
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+    defaults:
+      run:
+        # 📁 Default working directory for all `run` commands
+        working-directory: ./infra/environments/dev
+
+    steps:
+      # 📥 Step 1: Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 🔧 Step 2: Setup Terraform CLI in GitHub Actions environment
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.3  # Match your local version to avoid drift
+
+      # 🔍 Step 3: Initialize Terraform (downloads providers and modules)
+      - name: Terraform Init
+        run: terraform init
+
+      # ✅ Step 4: Validate Terraform configuration files
+      - name: Terraform Validate
+        run: terraform validate
+
+      # 🧠 Step 5: Run Terraform plan using dev-specific tfvars file
+      - name: Terraform Plan
+        run: terraform plan -var-file="dev.tfvars" -out=tfplandev
+
+      # ⚠️ Step 6: Auto-apply only if the code was pushed (not on PR)
+      # GitHub refs: https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplandev
