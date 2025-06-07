@@ -1,4 +1,4 @@
-# GitHub Actions Workflow for Terraform Deployment to Dev Environment
+# GitHub Actions Workflow for Terraform Deployment to Stage Environment
 name: Terraform CI/CD - Stage
 
 on:
@@ -14,8 +14,8 @@ on:
       - main
 
 jobs:
-  terraform-dev:
-    name: 'Terraform Plan & Apply (Dev)'
+  terraform-stage:
+    name: 'Terraform Plan & Apply (Stage)'
     runs-on: ubuntu-latest  # 🖥️ Use Ubuntu VM for running the workflow
 
     env:
@@ -28,7 +28,7 @@ jobs:
     defaults:
       run:
         # 📁 Default working directory for all `run` commands
-        working-directory: ./infra/environments/dev
+        working-directory: ./infra/environments/stage
 
     steps:
       # 📥 Step 1: Checkout the repository code
@@ -49,12 +49,12 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      # 🧠 Step 5: Run Terraform plan using dev-specific tfvars file
+      # 🧠 Step 5: Run Terraform plan using stage-specific tfvars file
       - name: Terraform Plan
-        run: terraform plan -var-file="dev.tfvars" -out=tfplandev
+        run: terraform plan -var-file="stage.tfvars" -out=tfplanstage
 
       # ⚠️ Step 6: Auto-apply only if the code was pushed (not on PR)
       # GitHub refs: https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve tfplandev
+        run: terraform apply -auto-approve tfplanstage
