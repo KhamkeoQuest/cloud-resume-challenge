@@ -29,11 +29,12 @@ Welcome to my **Cloud Resume Challenge** project, inspired by [Forrest Brazeal's
 
 | Phase                            | Status        | Notes                                                                |
 |----------------------------------|---------------|----------------------------------------------------------------------|
-| 1. Frontend static site          | 🟨 In Progress | HTML complete, resume embedded, pending styling & final assets       |
-| 2. Azure Infra (Dev/Stage/Prod)  | ✅ Complete    | Multi-env setup with modular Terraform and tfvars                    |
+| 1. Frontend static site          | ✅ Basic Setup | HTML complete, placeholder content in place; styling WIP             |
+| 2. Azure Infra (Dev/Stage/Prod)  | ✅ Complete    | Deployed via modular Terraform; resources verified in Azure          |
 | 3. DR Planning in AWS            | 🔜 Not Started | Will mirror static site with route failover and S3 backup            |
-| 4. GitHub Actions CI/CD          | 🔜 Not Started | Plan to auto-deploy on merge per environment                         |
-| 5. Cost Monitoring & Optimization| 🔜 Not Started | Will integrate Azure Cost Alerts and budget enforcement              |
+| 4. GitHub Actions CI/CD          | 🟨 In Progress | Infra CI for dev being developed; frontend deploy automation planned |
+| 5. Cost Monitoring & Optimization| 🔜 Not Started | Budget enforced (~$10/mo); alerts and tracking to be added soon      |
+
 
 ---
 

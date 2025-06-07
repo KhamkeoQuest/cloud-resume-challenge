@@ -1,0 +1,51 @@
+name: Terraform CI/CD - Prod
+
+on:
+  # Trigger the workflow on push or pull request events to the main branch
+  push:
+    branches:
+      - main
+  # Trigger the workflow on pull request events to the main branch
+  # terraform plan doesn't trigger on pull requests. Only apply does.
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform-prod:
+    name: 'Terraform Plan & Apply (Prod)'
+    runs-on: ubuntu-latest
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+    defaults:
+      run:
+        working-directory: ./infra/environments/prod
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        run: terraform plan -var-file="prod.tfvars" -out=tfplanprod
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplanprod
+
+
