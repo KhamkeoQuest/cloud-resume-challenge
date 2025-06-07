@@ -1,5 +1,5 @@
 # GitHub Actions Workflow for Terraform Deployment to Dev Environment
-name: Terraform CI/CD - Dev
+name: Terraform CI/CD - Stage
 
 on:
   # 🚀 Trigger when code is pushed directly to the main branch
