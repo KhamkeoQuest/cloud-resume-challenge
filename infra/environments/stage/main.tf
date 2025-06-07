@@ -28,3 +28,13 @@ module "static_site" {
   error_path          = local.error_path
   resume_path         = local.resume_path
 }
+
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "rg-resume-stage"
+    storage_account_name = "stresumestage"
+    container_name       = "tfstate"
+    key                  = "stage.terraform.tfstate"
+
+  }
+}
