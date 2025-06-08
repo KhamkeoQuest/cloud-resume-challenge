@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
   tags     = module.shared.tags[var.environment]
 }
 
-module "static_site" {
+module "static_storage" {
   source              = "../../modules/storage_static_site"
   project_name        = module.shared.project_name
   environment         = var.environment
@@ -34,6 +34,6 @@ terraform {
     resource_group_name  = "rg-resume-prod"
     storage_account_name = "stresumeprod"
     container_name       = "tfstate"
-    key = "prod.terraform.tfstate"
+    key                  = "prod.terraform.tfstate"
   }
 }

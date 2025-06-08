@@ -1,4 +1,4 @@
-resource "azurerm_storage_account" "static_site" {
+resource "azurerm_storage_account" "static_storage" {
   name                     = "st${var.project_name}${var.environment}"
   resource_group_name      = var.resource_group_name
   location                 = var.location
@@ -17,7 +17,7 @@ resource "azurerm_storage_account" "static_site" {
 
 resource "azurerm_storage_blob" "index" {
   name                   = "index.html"
-  storage_account_name   = azurerm_storage_account.static_site.name
+  storage_account_name   = azurerm_storage_account.static_storage.name
   storage_container_name = "$web"
   type                   = "Block"
   source                 = var.index_path
@@ -26,7 +26,7 @@ resource "azurerm_storage_blob" "index" {
 
 resource "azurerm_storage_blob" "error" {
   name                   = "404.html"
-  storage_account_name   = azurerm_storage_account.static_site.name
+  storage_account_name   = azurerm_storage_account.static_storage.name
   storage_container_name = "$web"
   type                   = "Block"
   source                 = var.error_path
@@ -34,7 +34,7 @@ resource "azurerm_storage_blob" "error" {
 
 resource "azurerm_storage_blob" "resume" {
   name                   = "khamkeo_khongsaly_resume.html"
-  storage_account_name   = azurerm_storage_account.static_site.name
+  storage_account_name   = azurerm_storage_account.static_storage.name
   storage_container_name = "$web"
   type                   = "Block"
   source                 = var.resume_path

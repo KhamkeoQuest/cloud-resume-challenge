@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
   tags     = module.shared.tags[var.environment]
 }
 
-module "static_site" {
+module "static_storage" {
   source              = "../../modules/storage_static_site"
   project_name        = module.shared.project_name
   environment         = var.environment

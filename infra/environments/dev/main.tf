@@ -17,7 +17,7 @@ resource "azurerm_resource_group" "rg" {
   tags     = module.shared.tags[var.environment]
 }
 
-module "static_site" {
+module "static_storage" {
   source              = "../../modules/storage_static_site"
   project_name        = module.shared.project_name
   environment         = var.environment
@@ -40,9 +40,9 @@ terraform {
 
 module "static_web_app" {
   source              = "../../modules/static_web_app"
-  name                = "resume-swa"
-  resource_group_name = module.resource_group.name
-  location            = module.resource_group.location
-  repository_url      = "https://github.com/KhamkeoQuest/cloud-resume-challenge
-  tags                = local.tags
+  project_name        = module.shared.project_name
+  environment         = var.environment
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  tags                = module.shared.tags[var.environment]
 }
