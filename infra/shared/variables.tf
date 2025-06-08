@@ -6,9 +6,9 @@ variable "environments" {
 variable "locations" {
   type = map(string)
   default = {
-    dev   = "East US"
+    dev   = "East US 2"
     stage = "Central US"
-    prod  = "West US 3"
+    prod  = "West US 2"
   }
 }
 

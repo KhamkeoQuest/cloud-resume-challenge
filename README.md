@@ -53,10 +53,13 @@ Welcome to my **Cloud Resume Challenge** project, inspired by [Forrest Brazeal's
 │   ├── environments/
 │   │   ├── dev/
 │   │   │   └── main.tf
+│   │   │   └── etc.
 │   │   ├── stage/
 │   │   │   └── main.tf
+│   │   │   └── etc.
 │   │   └── prod/
 │   │       └── main.tf
+│   │   │   └── etc.
 │   ├── modules/
 │   │   ├── function_app/
 │   │   ├── storage_static_site/
@@ -65,7 +68,9 @@ Welcome to my **Cloud Resume Challenge** project, inspired by [Forrest Brazeal's
 │       ├── providers.tf
 │       ├── locals.tf
 │       └── variables.tf
-├── .github/workflows/terraform.yml
+├── .github
+│   └── workflows
+│       └── terraform-enviroment.yml
 ├── .gitignore
 └── README.md
 └── aws-dr/                   # DR resources in AWS
