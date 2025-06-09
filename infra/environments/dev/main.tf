@@ -49,10 +49,10 @@ module "static_web_app" {
 
 module "cdn" {
   source              = "../../modules/cdn"
-  project_name        = var.project_name
+  project_name        = module.shared.project_name
   environment         = var.environment
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
   tags                = module.shared.tags[var.environment]
 
   # Pulling output from the storage module
