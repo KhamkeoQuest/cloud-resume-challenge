@@ -1,0 +1,49 @@
+name: "Terraform Cloudflare"
+
+on:
+  push:
+    paths:
+      - "cloudflare/**"
+      - ".github/workflows/terraform-cloudflare.yml"
+  pull_request:
+    paths:
+      - "cloudflare/**"
+      - ".github/workflows/terraform-cloudflare.yml"
+
+jobs:
+  terraform:
+    name: "Terraform Cloudflare"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cloudflare
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.7.4 # or your preferred version
+
+      - name: Terraform Init
+        run: |
+          terraform init -backend-config="resource_group_name=rg-resume-dev" \
+                         -backend-config="storage_account_name=stresumedev" \
+                         -backend-config="container_name=tfstate" \
+                         -backend-config="key=cloudflare.terraform.tfstate"
+
+      - name: Terraform Plan
+        run: |
+          terraform plan -var="cloudflare_api_token=${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                         -var="cloudflare_account_id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" \
+                         -var="domain=${{ secrets.CLOUDFLARE_DOMAIN }}" \
+                         -detailed-exitcode
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: |
+          terraform apply -auto-approve -var="cloudflare_api_token=${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                                           -var="cloudflare_account_id=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}" \
+                                           -var="domain=${{ secrets.CLOUDFLARE_DOMAIN }}"
