@@ -1,17 +1,23 @@
 # GitHub Actions Workflow for Terraform Deployment to Stage Environment
 name: Terraform CI/CD - Stage
 
+# This workflow runs Terraform commands for the development environment
 on:
-  # 🚀 Trigger when code is pushed directly to the main branch
   push:
     branches:
       - main
-
-  # 🔍 Trigger when a pull request is made targeting main branch
-  # Useful for running terraform plan for visibility (apply won't run unless merged)
+    paths:
+      - 'infra/environments/stage/**'
+      - 'modules/**'
+      - 'shared/**'
+#  # Trigger on pull requests to the main branch for specific paths
   pull_request:
     branches:
       - main
+    paths:
+      - 'infra/environments/stage/**'
+      - 'modules/**'
+      - 'shared/**'
 
 jobs:
   terraform-stage:

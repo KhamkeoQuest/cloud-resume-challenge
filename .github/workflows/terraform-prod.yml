@@ -1,15 +1,22 @@
 name: Terraform CI/CD - Prod
 
+# This workflow runs Terraform commands for the development environment
 on:
-  # Trigger the workflow on push or pull request events to the main branch
   push:
     branches:
       - main
-  # Trigger the workflow on pull request events to the main branch
-  # terraform plan doesn't trigger on pull requests. Only apply does.
+    paths:
+      - 'infra/environments/prod/**'
+      - 'modules/**'
+      - 'shared/**'
+#  # Trigger on pull requests to the main branch for specific paths
   pull_request:
     branches:
       - main
+    paths:
+      - 'infra/environments/prod/**'
+      - 'modules/**'
+      - 'shared/**'
 
 jobs:
   terraform-prod:
