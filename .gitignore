@@ -7,6 +7,7 @@ terraform.tfvars.json
 crash.log
 *.backup
 tfplan
+cf.tfvars
 
 # Terraform lock file (optional: keep if collaborating)
 .terraform.lock.hcl
