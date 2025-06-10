@@ -1,0 +1,32 @@
+name: Deploy Frontend to Azure Blob
+
+on:
+  push:
+    paths:
+      - 'frontend/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy HTML to Azure Blob Storage
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Upload to Azure Blob
+      uses: azure/cli@v1
+      with:
+        inlineScript: |
+          az storage blob upload-batch \
+            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
+            --destination '$web' \
+            --source frontend \
+            --auth-mode key \
+            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
+            --overwrite
+
+    - name: Invalidate CDN (optional, if using Azure CDN)
+      if: ${{ false }}  # set to true if you're using CDN
+      run: echo "Add CDN purge step here if needed."

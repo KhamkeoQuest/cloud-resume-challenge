@@ -1,4 +1,4 @@
-name: "Terraform Cloudflare"
+name: "Terraform CI/CD Cloudflare"
 
 on:
   push:

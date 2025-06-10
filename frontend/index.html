@@ -2,56 +2,103 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Khamkeo Khongsaly – Resume</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khamkeo Khongsaly | Cloud Resume</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; background-color: #f4f4f4; color: #333; }
+    header { margin-bottom: 2rem; }
+    h1 { font-size: 2em; margin-bottom: 0; }
+    h2 { border-bottom: 1px solid #ccc; margin-top: 2rem; }
+    a { color: #0066cc; text-decoration: none; }
+    .section { margin-bottom: 1.5rem; }
+    .counter { font-weight: bold; color: #444; }
+    footer { margin-top: 3rem; text-align: center; font-size: 0.9em; color: #666; }
+  </style>
 </head>
-<script src="scripts.js"></script>
 <body>
-  <main>
-    <header>
-      <h1>Khamkeo Khongsaly</h1>
-      <p>Cloud Engineer | DevOps | Infrastructure Automation</p>
-      <p><a href="mailto:khamkeo@gmail.com">khamkeo@gmail.com</a> | LinkedIn | GitHub</p>
-    </header>
 
-    <section>
-      <h2>Summary</h2>
-      <p>Brief professional summary (2-3 sentences).</p>
-    </section>
+  <header>
+    <h1>Khamkeo Khongsaly</h1>
+    <p>📍 Phoenix, AZ | 📧 <a href="mailto:khamkeo@gmail.com">khamkeo@gmail.com</a> | 📞 619-246-0850</p>
+    <p>
+      <a href="https://github.com/KhamkeoQuest" target="_blank">GitHub</a> |
+      <a href="https://linkedin.com/in/khamkeo" target="_blank">LinkedIn</a>
+    </p>
+  </header>
 
-    <section>
-      <h2>Skills</h2>
-      <ul>
-        <li>Terraform, Azure, GitHub Actions</li>
-        <li>PowerShell, Bash, Python</li>
-        <li>Active Directory, Entra ID, VPN Automation</li>
-      </ul>
-    </section>
+  <section class="section">
+    <h2>Profile</h2>
+    <p>Experienced IT Systems Engineer with 10+ years in multi-platform SaaS environments. Known for combining deep technical expertise with a strong focus on automation, team leadership, and operational excellence. Passionate about process improvement and building scalable, maintainable systems.</p>
+  </section>
 
-    <section>
-      <h2>Experience</h2>
-      <h3>System Engineer III – ESO</h3>
-      <p><em>Dates</em></p>
-      <ul>
-        <li>Reduced infrastructure costs by 10% via automation.</li>
-        <li>Integrated Barracuda API with PagerDuty to eliminate SEV-1s.</li>
-        <li>Created Power BI dashboards for real-time ops visibility.</li>
-      </ul>
-    </section>
+  <section class="section">
+    <h2>Skills</h2>
+    <ul>
+      <li><strong>Cloud & Infrastructure:</strong> Azure, AWS, Windows Server, Linux, VMware, Intune</li>
+      <li><strong>IAM & Security:</strong> Azure Entra ID, Okta, SSO, RBAC, SCIM, PIM, HIPAA, GDPR</li>
+      <li><strong>Automation & DevOps:</strong> PowerShell, Terraform, Ansible, Azure DevOps, Git</li>
+      <li><strong>Monitoring & Tooling:</strong> PRTG, Zabbix, New Relic, Atlassian Suite</li>
+      <li><strong>Leadership:</strong> Team Mentorship, Cross-functional Projects, SLA & Incident Mgmt</li>
+    </ul>
+  </section>
 
-    <section>
-      <h2>Projects</h2>
-      <ul>
-        <li><strong>Cloud Resume Challenge:</strong> <a href="#">This site</a> (Terraform, GitHub Actions, Azure)</li>
-        <li><strong>Self-Service IT Portal:</strong> Internal request automation</li>
-        <li><strong>Secure Landing Zone:</strong> Enterprise-ready cloud infra template</li>
-      </ul>
-    </section>
+  <section class="section">
+    <h2>Experience</h2>
+    <p><strong>System Engineer III – Interim Ops Lead</strong>, ESO Solutions (Jun 2023 – May 2025)</p>
+    <ul>
+      <li>Led global SaaS IT Ops strategy, boosting efficiency by 15% and reducing tickets by 28%</li>
+      <li>Automated VPN healing with Barracuda API and PagerDuty triggers</li>
+      <li>Built Power BI dashboards and lifecycle automation for Azure cost savings</li>
+    </ul>
 
-    <footer>
-      <p>© Khamkeo Khongsaly – Built with HTML, CSS, and 💻</p>
-    </footer>
-  </main>
+    <p><strong>System Engineer I</strong>, ESO Solutions (Mar 2022 – Jun 2023)</p>
+    <ul>
+      <li>Reduced patching effort by 90% through automation</li>
+      <li>Hardening, audit remediation, and documentation standardization</li>
+    </ul>
+
+    <p><strong>IT Administrator</strong>, Trackforce Valiant (Oct 2019 – Mar 2022)</p>
+    <ul>
+      <li>Automated patching, DLP policies, and AWS migration</li>
+    </ul>
+
+    <p><strong>Earlier Roles:</strong> Mapp Digital, Qualcomm – Various IT support & automation roles</p>
+  </section>
+
+  <section class="section">
+    <h2>Education</h2>
+    <p><strong>University of Phoenix</strong> – B.S. in Information Technology</p>
+  </section>
+
+  <section class="section">
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>Cloud Resume Challenge:</strong> <a href="https://github.com/KhamkeoQuest/cloud-resume-challenge" target="_blank">This site</a> (Terraform, GitHub Actions, Azure)</li>
+      <li><strong>Self-Service IT Portal:</strong> <a href="https://github.com/KhamkeoQuest/Self-Service-IT-Portal" target="_blank">This site</a> Internal request automation tool</li>
+      <li><strong>Secure Landing Zone:</strong> <a href="https://github.com/KhamkeoQuest/Secure-Landing-Zone" target="_blank">This site</a> Enterprise-ready cloud infrastructure template</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>Visitor Count</h2>
+    <p>You are visitor number: <span id="visitor-count" class="counter">Loading...</span></p>
+  </section>
+
+  <footer>
+    <p>© Khamkeo Khongsaly – Built with HTML, CSS, and IaC</p>
+  </footer>
+
+  <script>
+    // Placeholder fetch logic for Azure Function visitor count
+    fetch('https://<your-function-url>/api/visitors')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('visitor-count').textContent = data.count || 'N/A';
+      })
+      .catch(() => {
+        document.getElementById('visitor-count').textContent = 'Unavailable';
+      });
+  </script>
+
 </body>
 </html>
