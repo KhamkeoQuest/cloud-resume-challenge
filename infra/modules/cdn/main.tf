@@ -1,3 +1,9 @@
+## We are not using the `azurerm_cdn_custom_domain` resource here because I'm using the free tier of Azure CDN, which does not support custom domains directly. 
+## Instead, the CDN endpoint will be used with the blob storage origin.
+## cloudflare_workers_script.resume_forwarder.name is the name of the Cloudflare Worker script that handles requests to the custom domain.
+
+# This module sets up an Azure CDN profile and endpoint for serving static content from Azure Blob Storage.
+
 resource "azurerm_cdn_profile" "cdn" {
   name                = "${var.project_name}-cdn-${var.environment}"
   location            = var.location

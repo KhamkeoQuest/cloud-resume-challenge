@@ -4,6 +4,7 @@ module "shared" {
   source = "../../shared"
 }
 
+# This file sets up the production environment for the Cloud Resume Challenge using Azure resources.
 locals {
   frontend_path = "${path.root}/../../../frontend"
   index_path    = "${local.frontend_path}/index.html"
@@ -11,12 +12,14 @@ locals {
   resume_path   = "${local.frontend_path}/khamkeo_khongsaly_resume.html"
 }
 
+# This file sets up the production environment for the Cloud Resume Challenge using Azure resources.
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${module.shared.project_name}-${var.environment}"
   location = module.shared.locations[var.environment]
   tags     = module.shared.tags[var.environment]
 }
 
+# This module sets up an Azure Static Web App to host the frontend of the cloud resume challenge.
 module "static_storage" {
   source              = "../../modules/storage_static_site"
   project_name        = module.shared.project_name
@@ -29,6 +32,7 @@ module "static_storage" {
   resume_path         = local.resume_path
 }
 
+# This module sets up an Azure Static Web App to host the frontend of the cloud resume challenge.
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-resume-prod"
@@ -38,8 +42,12 @@ terraform {
   }
 }
 
+# This module sets up an Azure Static Web App to host the frontend of the cloud resume challenge.
+# setting count to 0 to avoid creating CDN in prod environment
+# keep code here in case we want to enable CDN in the future
 module "cdn" {
   source              = "../../modules/cdn"
+  count               =  0
   project_name        = module.shared.project_name
   environment         = var.environment
   location            = azurerm_resource_group.rg.location
