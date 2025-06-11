@@ -1,0 +1,40 @@
+name: Deploy Azure Function (Table Storage)
+
+on:
+  push:
+    paths:
+      - 'api/visitor_counter/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Azure Functions Core Tools
+      run: npm install -g azure-functions-core-tools@4 --unsafe-perm true
+
+    - name: Install dependencies
+      run: |
+        cd api/visitor_counter
+        python -m venv .venv
+        source .venv/bin/activate
+        pip install -r requirements.txt
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure Function App
+      run: |
+        cd api/visitor_counter
+        func azure functionapp publish ${{ secrets.AZURE_FUNCTIONAPP_NAME }}
