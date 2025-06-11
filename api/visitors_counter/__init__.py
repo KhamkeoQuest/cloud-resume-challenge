@@ -1,34 +1,33 @@
 import logging
-import azure.functions as func
 import os
-from azure.cosmos import CosmosClient, exceptions
+import azure.functions as func
+from azure.data.tables import TableServiceClient
 
-COSMOS_DB_ENDPOINT = os.environ["COSMOS_DB_ENDPOINT"]
-COSMOS_DB_KEY = os.environ["COSMOS_DB_KEY"]
-DATABASE_ID = "resume"
-CONTAINER_ID = "visitorCount"
+# Read connection string from environment variable
+connection_string = os.getenv("TABLE_STORAGE_CONNECTION")
 
-client = CosmosClient(COSMOS_DB_ENDPOINT, COSMOS_DB_KEY)
-container = client.get_database_client(DATABASE_ID).get_container_client(CONTAINER_ID)
+# Initialize Table client
+table_service = TableServiceClient.from_connection_string(conn_str=connection_string)
+table_client = table_service.get_table_client(table_name="visitorcounter")
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Visitor counter triggered.')
+    logging.info('Processing visitor count request.')
+
+    partition_key = "counter"
+    row_key = "visitor"
 
     try:
-        item = container.read_item(item="counter", partition_key="counter")
-        item['count'] += 1
-        container.replace_item(item="counter", body=item)
+        entity = table_client.get_entity(partition_key=partition_key, row_key=row_key)
+        entity['Count'] += 1
+        table_client.update_entity(entity)
+    except Exception as e:
+        # First time, entity might not exist, so create it
+        logging.warning(f"Entity not found, initializing: {e}")
+        entity = {
+            'PartitionKey': partition_key,
+            'RowKey': row_key,
+            'Count': 1
+        }
+        table_client.create_entity(entity)
 
-        return func.HttpResponse(
-            body=f'{{"count": {item["count"]}}}',
-            mimetype="application/json",
-            status_code=200
-        )
-
-    except exceptions.CosmosHttpResponseError as e:
-        logging.error(f"Cosmos DB error: {str(e)}")
-        return func.HttpResponse(
-            body='{"error": "Database error"}',
-            mimetype="application/json",
-            status_code=500
-        )
+    return func.HttpResponse(f'{{"count": {entity["Count"]}}}', mimetype="application/json", status_code=200)
