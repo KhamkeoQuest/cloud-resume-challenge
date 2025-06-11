@@ -2,8 +2,8 @@
 # Ragrs (Read Access Geo-Redundant Storage) is used for high availability.
 resource "azurerm_storage_account" "storage" {
   name                     = "${var.project_name}${var.environment}storage${random_integer.unique_suffix.result}"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
   account_tier             = "Standard"
   account_replication_type = "RAGRS"  # Read Access Geo-Redundant Storage
 
