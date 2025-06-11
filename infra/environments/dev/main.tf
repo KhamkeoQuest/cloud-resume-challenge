@@ -52,6 +52,14 @@ module "static_web_app" {
   tags                = module.shared.tags[var.environment]
 }
 
+module "storage_account" {
+  source              = "../../modules/storage_account"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  tags                = module.shared.tags[var.environment]
+}
+
+
 # This module sets up an Azure CDN profile and endpoint for serving static content from Azure Blob Storage.
 # setting count to 0 to avoid creating CDN in dev environment
 # keep code here in case we want to enable CDN in the future

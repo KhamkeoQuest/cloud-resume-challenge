@@ -47,3 +47,25 @@ node_modules/
 
 # Function packaging 
 *.zip
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Azure Functions build artifacts
+.python_packages/
+local.settings.json
+
+# Recursive ignores for Azure Functions
+**/__pycache__/
+**/.python_packages/
+**/.funcignore
+**/local.settings.json
+
+# Virtual environments
+.venv/
+env/
+venv/
+

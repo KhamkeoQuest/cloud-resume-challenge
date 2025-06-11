@@ -22,3 +22,12 @@ output "debug_resume_exists" {
 output "resolved_resume_path" {
   value = abspath(local.resume_path)
 }
+
+output "storage_account_name" {
+  value = module.storage_account.storage_account_name
+}
+
+output "storage_account_primary_connection_string" {
+  value = module.storage_account.storage_account_primary_connection_string
+  sensitive = true
+}
