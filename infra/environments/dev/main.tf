@@ -54,6 +54,8 @@ module "static_web_app" {
 
 module "storage_account" {
   source              = "../../modules/storage_account"
+  project_name        = module.shared.project_name
+  environment         = var.environment
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
   tags                = module.shared.tags[var.environment]
