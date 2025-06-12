@@ -1,33 +1,38 @@
 import logging
 import os
 import azure.functions as func
-from azure.data.tables import TableServiceClient
+from azure.cosmos import CosmosClient, PartitionKey
 
-# Read connection string from environment variable
-connection_string = os.getenv("TABLE_STORAGE_CONNECTION")
+# Load Cosmos DB credentials from environment variables
+COSMOS_ENDPOINT = os.getenv("COSMOS_DB_ENDPOINT")
+COSMOS_KEY = os.getenv("COSMOS_DB_KEY")
+DATABASE_NAME = "resume"
+CONTAINER_NAME = "visitorCounter"
 
-# Initialize Table client
-table_service = TableServiceClient.from_connection_string(conn_str=connection_string)
-table_client = table_service.get_table_client(table_name="visitorcounter")
+# Initialize Cosmos Client
+client = CosmosClient(COSMOS_ENDPOINT, credential=COSMOS_KEY)
+database = client.get_database_client(DATABASE_NAME)
+container = database.get_container_client(CONTAINER_NAME)
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing visitor count request.')
 
-    partition_key = "counter"
-    row_key = "visitor"
+    item_id = "counter"  # static ID for this use case
 
     try:
-        entity = table_client.get_entity(partition_key=partition_key, row_key=row_key)
-        entity['Count'] += 1
-        table_client.update_entity(entity)
+        item_response = container.read_item(item=item_id, partition_key=item_id)
+        item_response['count'] += 1
+        container.replace_item(item=item_response, body=item_response)
     except Exception as e:
-        # First time, entity might not exist, so create it
-        logging.warning(f"Entity not found, initializing: {e}")
-        entity = {
-            'PartitionKey': partition_key,
-            'RowKey': row_key,
-            'Count': 1
+        logging.warning(f"Item not found, initializing counter: {e}")
+        item_response = {
+            "id": item_id,
+            "count": 1
         }
-        table_client.create_entity(entity)
+        container.create_item(body=item_response)
 
-    return func.HttpResponse(f'{{"count": {entity["Count"]}}}', mimetype="application/json", status_code=200)
+    return func.HttpResponse(
+        body=f'{{"count": {item_response["count"]}}}',
+        mimetype="application/json",
+        status_code=200
+    )

@@ -1,7 +1,9 @@
+# Not used as I'm going twith cosmosdb serverless for the Cloud Resume Challenge.
+
 # This module creates an Azure Storage Account with a Table for the Cloud Resume Challenge.
 # Ragrs (Read Access Geo-Redundant Storage) is used for high availability.
 resource "azurerm_storage_account" "storage" {
-  name                     = "${var.project_name}${var.environment}storage${random_integer.unique_suffix.result}"
+  name                     = "st${var.project_name}${var.environment}table"
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"

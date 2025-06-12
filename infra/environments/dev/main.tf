@@ -52,8 +52,26 @@ module "static_web_app" {
   tags                = module.shared.tags[var.environment]
 }
 
+
+# This module sets up an Azure Cosmos DB account with serverless capabilities, a SQL database named "resume",
+# and a container named "visitorCounter" with a partition key on the "id" field.
+module "cosmosdb" {
+  source              = "../../modules/cosmosdb"
+  project_name        = module.shared.project_name
+  environment         = var.environment
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  tags                = module.shared.tags[var.environment]
+}
+
+
+
+# no longer needed as we are going to use Azure Cosmos DB for the visitor counter
+# This module sets up an Azure Cosmos DB account with serverless capabilities, a SQL database named "resume",
+# and a container named "visitorCounter" with a partition key on the "id" field.
 module "storage_account" {
   source              = "../../modules/storage_account"
+  count               = 0 # setting count to 0 to avoid creating storage account for table storage in dev environment
   project_name        = module.shared.project_name
   environment         = var.environment
   resource_group_name = azurerm_resource_group.rg.name

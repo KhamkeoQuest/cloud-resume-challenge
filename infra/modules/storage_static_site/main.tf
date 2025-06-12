@@ -1,5 +1,5 @@
 resource "azurerm_storage_account" "static_storage" {
-  name                     = "st${var.project_name}${var.environment}"
+  name                     = "st${var.project_name}${var.environment}static"
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"
