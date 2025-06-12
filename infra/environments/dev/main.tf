@@ -64,6 +64,28 @@ module "cosmosdb" {
   tags                = module.shared.tags[var.environment]
 }
 
+# This module creates an Azure Function App with a consumption plan, storage account, and Application Insights.
+module "function_app" {
+  source                  = "../../modules/function_app"
+  project_name            = module.shared.project_name
+  environment             = var.environment
+  resource_group_name     = azurerm_resource_group.rg.name
+  location                = azurerm_resource_group.rg.location
+  tags                    = module.shared.tags[var.environment]
+  cosmosdb_endpoint       = module.cosmosdb.cosmosdb_endpoint
+  cosmosdb_primary_key    = module.cosmosdb.cosmosdb_primary_key
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 # no longer needed as we are going to use Azure Cosmos DB for the visitor counter
