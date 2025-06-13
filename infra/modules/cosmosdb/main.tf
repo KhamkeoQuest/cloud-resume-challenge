@@ -3,7 +3,7 @@
 # and a container named "visitorCounter" with a partition key on the "id" field.
 
 resource "azurerm_cosmosdb_account" "cosmos_account" {
-  name                = "cosmos-${var.project_name}-${var.environment}-${var.location}"
+  name                = "cosmos-${var.project_name}-${var.environment}-${var.short_location}"
   location            = var.location
   resource_group_name = var.resource_group_name
   offer_type          = "Standard"

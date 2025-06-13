@@ -43,3 +43,21 @@ variable "subscription_id" {
   type        = string
   description = "Azure Subscription ID"
 }
+
+variable "env_short" {
+  type = map(string)
+  default = {
+    dev   = "dev"
+    stage = "stg"
+    prod  = "prd"
+  }
+}
+
+variable "loc_short" {
+  type = map(string)
+  default = {
+    "East US 2"   = "eus2"
+    "Central US"  = "cus"
+    "West US 2"   = "wus2"
+  }
+}

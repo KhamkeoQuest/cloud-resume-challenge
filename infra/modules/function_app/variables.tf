@@ -6,14 +6,14 @@ variable "environment" {
   type = string
 }
 
+variable "location" {
+  type = string
+}
+
 variable "resource_group_name" {
   type = string
 }
 
-variable "location" {
-  type = string
-  description = "Region in normalized format, e.g. eastus, centralus"
-}
 
 
 variable "tags" {
@@ -29,3 +29,8 @@ variable "cosmosdb_primary_key" {
   type = string
   description = "Cosmos DB primary key"
 }
+
+variable "short_location" {
+  type = string
+}
+

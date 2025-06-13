@@ -1,7 +1,7 @@
 # Function App Storage Account (for code artifacts)
 
 resource "azurerm_storage_account" "function_storage" {
-  name                     = "funcsa-${var.project_name}-${var.environment}-${var.location}"
+  name                     = "sa${var.project_name}${var.environment}func"
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"
@@ -14,7 +14,7 @@ resource "azurerm_storage_account" "function_storage" {
 # App Insights (monitoring)
 
 resource "azurerm_application_insights" "appinsights" {
-  name                = "ai-${var.project_name}-${var.environment}-${var.location}"
+  name                = "ai-${var.project_name}-${var.environment}-${var.short_location}"
   location            = var.location
   resource_group_name = var.resource_group_name
   application_type    = "web"
@@ -23,7 +23,7 @@ resource "azurerm_application_insights" "appinsights" {
 # Consumption Plan
 
 resource "azurerm_service_plan" "function_plan" {
-  name                = "funcplan-${var.project_name}-${var.environment}-${var.location}"
+  name                = "funcplan-${var.project_name}-${var.environment}-${var.short_location}"
   location            = var.location
   resource_group_name = var.resource_group_name
   os_type             = "Linux"
@@ -33,7 +33,7 @@ resource "azurerm_service_plan" "function_plan" {
 # The Function App itself
 
 resource "azurerm_linux_function_app" "function_app" {
-  name                       = "funcapp-${var.project_name}-${var.environment}-${var.location}"
+  name                       = "funcapp-${var.project_name}-${var.environment}-${var.short_location}"
   resource_group_name        = var.resource_group_name
   location                   = var.location
   service_plan_id            = azurerm_service_plan.function_plan.id

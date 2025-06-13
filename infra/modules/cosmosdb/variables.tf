@@ -17,3 +17,7 @@ variable "location" {
 variable "tags" {
   type = map(string)
 }
+
+variable "short_location" {
+  type = string
+}
