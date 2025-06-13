@@ -47,32 +47,57 @@ Welcome to my **Cloud Resume Challenge** project, inspired by [Forrest Brazeal's
 ## Project Structure
 
 ```text
-├── frontend/                # Static frontend (HTML/CSS/JS)
-│   └── *.html
+repo-root/
+├── .github/
+│   └── workflows/
+│       ├── backend-deploy.yml         <-- Cosmos-powered multi-env backend deploy
+│       ├── frontend-deploy.yml        <-- Static website deploy
+│       ├── terraform-dev.yml          <-- Terraform dev infra deploy
+│       ├── terraform-stage.yml        <-- Terraform stage infra deploy
+│       ├── terraform-prod.yml         <-- Terraform prod infra deploy
+│       └── (optional) terraform-cloudflare.yml <-- DNS mgmt (if you're doing full SaaS DNS mgmt)
+│
 ├── infra/
-│   ├── environments/
-│   │   ├── dev/
-│   │   │   └── main.tf
-│   │   │   └── etc.
-│   │   ├── stage/
-│   │   │   └── main.tf
-│   │   │   └── etc.
-│   │   └── prod/
-│   │       └── main.tf
-│   │   │   └── etc.
+│   ├── shared/
+│   │   ├── variables.tf
+│   │   ├── providers.tf              <-- ✅ Now includes version pinning + subscription_id variable
+│   │   └── location_normalizer/      <-- ✅ Location mapping helper module
+│   │
 │   ├── modules/
-│   │   ├── function_app/
-│   │   ├── storage_static_site/
-│   │   └── traffic_manager/
-│   └── shared/
-│       ├── providers.tf
-│       ├── locals.tf
-│       └── variables.tf
-├── .github
-│   └── workflows
-│       └── terraform-enviroment.yml
-├── .gitignore
-└── README.md
+│   │   ├── resource_group/
+│   │   ├── storage_account/          <-- For static website
+│   │   ├── cosmosdb/                 <-- ✅ Cosmos DB Serverless module
+│   │   ├── function_app/             <-- ✅ Function App module wired to Cosmos
+│   │   └── (optional) dns/           <-- If you build full SaaS DNS mgmt
+│   │
+│   └── environments/
+│       ├── dev/
+│       │   ├── main.tf
+│       │   ├── variables.tf
+│       │   ├── dev.tfvars            <-- ✅ Contains only: environment="dev" and subscription_id
+│       │   └── backend.tf            <-- ✅ Hardcoded backend state config (acceptable for SaaS v1)
+│       │
+│       ├── stage/
+│       │   ├── main.tf
+│       │   ├── variables.tf
+│       │   ├── stage.tfvars
+│       │   └── backend.tf
+│       │
+│       └── prod/
+│           ├── main.tf
+│           ├── variables.tf
+│           ├── prod.tfvars
+│           └── backend.tf
+│
+├── api/
+│   └── visitor_counter/
+│       ├── __init__.py               <-- Cosmos visitor counter function
+│       ├── function.json
+│       └── requirements.txt
+│
+└── frontend/
+    ├── index.html
+    └── (your other static website assets)
 └── aws-dr/                   # DR resources in AWS
 └── diagram/                  # Architecture diagrams and notes
 ```  
