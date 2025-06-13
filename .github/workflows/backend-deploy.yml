@@ -1,17 +1,36 @@
-name: Deploy Azure Function (Table Storage)
+name: Multi-Env Backend Deploy (Cosmos)
 
 on:
   push:
-    paths:
-      - 'api/visitor_counter/**'
+    branches: [ dev, stage, main ]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        include:
+          - env: dev
+            branch: dev
+            azure_credentials: AZURE_CREDENTIALS_DEV
+            function_app_name: AZURE_FUNCTIONAPP_NAME_DEV
+
+          - env: stage
+            branch: stage
+            azure_credentials: AZURE_CREDENTIALS_STAGE
+            function_app_name: AZURE_FUNCTIONAPP_NAME_STAGE
+
+          - env: prod
+            branch: main
+            azure_credentials: AZURE_CREDENTIALS_PROD
+            function_app_name: AZURE_FUNCTIONAPP_NAME_PROD
+
+    if: github.ref == 'refs/heads/' + matrix.branch
+
     steps:
-    - name: Checkout Code
+    - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Setup Python
@@ -32,9 +51,9 @@ jobs:
     - name: Login to Azure
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets[matrix.azure_credentials] }}
 
     - name: Deploy to Azure Function App
       run: |
         cd api/visitor_counter
-        func azure functionapp publish ${{ secrets.AZURE_FUNCTIONAPP_NAME }}
+        func azure functionapp publish ${{ secrets[matrix.function_app_name] }}

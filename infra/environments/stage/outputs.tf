@@ -22,3 +22,8 @@ output "debug_resume_exists" {
 output "resolved_resume_path" {
   value = abspath(local.resume_path)
 }
+
+
+output "function_app_name" {
+  value = module.function_app.function_app_name
+}

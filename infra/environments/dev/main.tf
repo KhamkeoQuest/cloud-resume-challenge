@@ -1,8 +1,10 @@
 # dev/main.tf
 
 module "shared" {
-  source = "../../shared"
+  source          = "../../shared"
+  subscription_id = var.subscription_id
 }
+
 
 # This file sets up the development environment for the Cloud Resume Challenge using Azure resources.
 locals {

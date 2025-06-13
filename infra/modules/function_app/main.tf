@@ -26,7 +26,7 @@ resource "azurerm_service_plan" "function_plan" {
   name                = "funcplan-${var.project_name}-${var.environment}-${var.location}"
   location            = var.location
   resource_group_name = var.resource_group_name
-  os_type             = "linux"
+  os_type             = "Linux"
   sku_name            = "Y1" # Consumption plan
 }
 
