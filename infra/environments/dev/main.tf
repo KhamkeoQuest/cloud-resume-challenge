@@ -12,6 +12,13 @@ locals {
   resume_path   = "${local.frontend_path}/khamkeo_khongsaly_resume.html"
 }
 
+# This module normalizes the location input to a format suitable for Azure resources.
+module "normalized_location" {
+  source   = "../../modules/location_normalizer"
+  location = var.location
+}
+
+
 # This file sets up the development environment for the Cloud Resume Challenge using Azure resources.
 resource "azurerm_resource_group" "rg" {
   name     = "rg-${module.shared.project_name}-${var.environment}"
@@ -24,8 +31,8 @@ module "static_storage" {
   source              = "../../modules/storage_static_site"
   project_name        = module.shared.project_name
   environment         = var.environment
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = module.shared.tags[var.environment]
   index_path          = local.index_path
   error_path          = local.error_path
@@ -47,8 +54,8 @@ module "static_web_app" {
   source              = "../../modules/static_web_app"
   project_name        = module.shared.project_name
   environment         = var.environment
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = module.shared.tags[var.environment]
 }
 
@@ -59,8 +66,8 @@ module "cosmosdb" {
   source              = "../../modules/cosmosdb"
   project_name        = module.shared.project_name
   environment         = var.environment
-  resource_group_name = azurerm_resource_group.rg.name
-  location            = azurerm_resource_group.rg.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   tags                = module.shared.tags[var.environment]
 }
 
