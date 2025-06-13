@@ -9,7 +9,7 @@ module "shared" {
 terraform {
   backend "azurerm" {
     resource_group_name  = "rg-resume-stage"
-    storage_account_name = "stresumestage"
+    storage_account_name = "saresumestagestatic"
     container_name       = "tfstate"
     key                  = "stage.terraform.tfstate"
   }
