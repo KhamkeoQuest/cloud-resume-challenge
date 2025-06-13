@@ -37,6 +37,14 @@ resource "azurerm_resource_group" "rg" {
   tags     = module.shared.tags[var.environment]
 }
 
+# This module sets up an Azure Resource Group for the Cloud Resume Challenge.
+resource "azurerm_application_insights" "app_insights" {
+  name                = "ai-${module.shared.project_name}-${var.environment}-${module.normalized_location.short_location}"
+  location            = module.shared.locations[var.environment]
+  resource_group_name = azurerm_resource_group.rg.name
+  application_type    = "web"
+}
+
 # This module sets up an Azure Static Web App to host the frontend of the cloud resume challenge.
 module "static_storage" {
   source              = "../../modules/storage_static_site"
@@ -84,6 +92,7 @@ module "function_app" {
   cosmosdb_endpoint       = module.cosmosdb.cosmosdb_endpoint
   cosmosdb_primary_key    = module.cosmosdb.cosmosdb_primary_key
   short_location          = module.normalized_location.short_location
+  app_insights_instrumentation_key = azurerm_application_insights.app_insights.instrumentation_key
 }
 
 

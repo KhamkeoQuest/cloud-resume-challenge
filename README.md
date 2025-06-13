@@ -104,6 +104,32 @@ repo-root/
 
 ---
 
-Let me know:
+## Project decisions and other options
+
+**Budget**
+- like real world, most companies dont have unlimited funds and you'll have to make decision based on a set budget.  Shoot you might not even get a budget but a cut cost mandate.
+- for the Project I've set a **$10/month** budget
+
+**Terraform State Backend Architecture**
+- Backend Alternatives (For Future Scaling)
+| Option                                   | Pros                                                                   | Cons                                                             | Cost                                                 |
+| ---------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------- |
+| ✅ `azurerm` backend (current)            | Simple, native, cheap                                                  | Occasional stability quirks                                      | \~\$0.01/month                                       |
+| ✅ Terraform Cloud                        | SaaS-managed, team collaboration, state drift detection, great locking | Additional cost (after free tier), SaaS dependency               | Free for personal orgs; Paid tiers \~\$20/user/month |
+| ✅ Azure Managed Terraform (if available) | Fully Azure-native SaaS state                                          | Limited rollout, not always available for non-enterprise tenants | Same Azure Storage cost                              |
+| ✅ Terragrunt / Atlantis                  | Full IaC orchestration, advanced workflows                             | Adds complexity, requires ops ownership                          | Mostly free (infra only)                             |
+
+- When to consider upgrading backend
+| Situation                                   | Consider Moving                          |
+| ------------------------------------------- | ---------------------------------------- |
+| Multiple engineers contributing             | Terraform Cloud SaaS                     |
+| Frequent state lock conflicts               | Terraform Cloud or Azure Managed Backend |
+| SaaS product scaling across multiple clouds | Terraform Cloud or orchestration layers  |
+| Current backend generally stable            | Stay on `azurerm` backend                |
+
+
+---
+
+## Let me know
 - If there is anything else I should be considering, that I haven't yet
 - This has actually ben a really fun project so far.

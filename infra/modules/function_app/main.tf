@@ -1,5 +1,6 @@
 # Function App Storage Account (for code artifacts)
 
+# This module creates an Azure Function App with a consumption plan, storage account, and Application Insights.
 resource "azurerm_storage_account" "function_storage" {
   name                     = "sa${var.project_name}${var.environment}func"
   resource_group_name      = var.resource_group_name
@@ -12,7 +13,6 @@ resource "azurerm_storage_account" "function_storage" {
 }
 
 # App Insights (monitoring)
-
 resource "azurerm_application_insights" "appinsights" {
   name                = "ai-${var.project_name}-${var.environment}-${var.short_location}"
   location            = var.location
@@ -21,7 +21,6 @@ resource "azurerm_application_insights" "appinsights" {
 }
 
 # Consumption Plan
-
 resource "azurerm_service_plan" "function_plan" {
   name                = "funcplan-${var.project_name}-${var.environment}-${var.short_location}"
   location            = var.location
@@ -31,7 +30,6 @@ resource "azurerm_service_plan" "function_plan" {
 }
 
 # The Function App itself
-
 resource "azurerm_linux_function_app" "function_app" {
   name                       = "funcapp-${var.project_name}-${var.environment}-${var.short_location}"
   resource_group_name        = var.resource_group_name
@@ -52,10 +50,11 @@ resource "azurerm_linux_function_app" "function_app" {
   }
 
   app_settings = {
-    AzureWebJobsStorage      = azurerm_storage_account.function_storage.primary_connection_string
-    FUNCTIONS_WORKER_RUNTIME = "python"
-    COSMOS_DB_ENDPOINT       = var.cosmosdb_endpoint
-    COSMOS_DB_KEY            = var.cosmosdb_primary_key
+    AzureWebJobsStorage              = azurerm_storage_account.function_storage.primary_connection_string
+    FUNCTIONS_WORKER_RUNTIME         = "python"
+    COSMOS_DB_ENDPOINT               = var.cosmosdb_endpoint
+    COSMOS_DB_KEY                    = var.cosmosdb_primary_key
+    "APPINSIGHTS_INSTRUMENTATIONKEY" = var.app_insights_instrumentation_key
   }
 
   tags = var.tags

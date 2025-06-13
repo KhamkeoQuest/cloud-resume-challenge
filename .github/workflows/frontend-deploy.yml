@@ -1,32 +1,50 @@
-name: Deploy Frontend to Azure Blob
+name: Multi-Env Frontend Deploy (Blob)
 
 on:
   push:
-    paths:
-      - 'frontend/**'
+    branches: [ dev, stage, main ]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy HTML to Azure Blob Storage
+
+    strategy:
+      matrix:
+        include:
+          - env: dev
+            branch: dev
+            storage_account_name: AZURE_STORAGE_ACCOUNT_NAME_DEV
+            storage_account_key: AZURE_STORAGE_ACCOUNT_KEY_DEV
+
+          - env: stage
+            branch: stage
+            storage_account_name: AZURE_STORAGE_ACCOUNT_NAME_STAGE
+            storage_account_key: AZURE_STORAGE_ACCOUNT_KEY_STAGE
+
+          - env: prod
+            branch: main
+            storage_account_name: AZURE_STORAGE_ACCOUNT_NAME_PROD
+            storage_account_key: AZURE_STORAGE_ACCOUNT_KEY_PROD
 
     steps:
+
     - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Upload to Azure Blob
+      if: "github.ref == format('refs/heads/{0}', matrix.branch)"
       uses: azure/cli@v1
       with:
         inlineScript: |
           az storage blob upload-batch \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
+            --account-name ${{ secrets[matrix.storage_account_name] }} \
             --destination '$web' \
             --source frontend \
             --auth-mode key \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
+            --account-key ${{ secrets[matrix.storage_account_key] }} \
             --overwrite
 
     - name: Invalidate CDN (optional, if using Azure CDN)
-      if: ${{ false }}  # set to true if you're using CDN
+      if: false
       run: echo "Add CDN purge step here if needed."

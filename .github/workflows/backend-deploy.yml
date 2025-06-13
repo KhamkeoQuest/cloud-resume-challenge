@@ -27,7 +27,7 @@ jobs:
             azure_credentials: AZURE_CREDENTIALS_PROD
             function_app_name: AZURE_FUNCTIONAPP_NAME_PROD
 
-    if: github.ref == format('refs/heads/{0}', matrix.branch)
+    if: "github.ref == format('refs/heads/{0}', matrix.branch)"
 
     steps:
     - name: Checkout code
