@@ -1,4 +1,4 @@
-name: SaaS Multi-Env Frontend Deploy
+name: Multi-Env Frontend Deploy
 
 on:
   push:
@@ -26,8 +26,6 @@ jobs:
             branch: main
             storage_account_name: AZURE_STORAGE_ACCOUNT_NAME_PROD
             storage_account_key: AZURE_STORAGE_ACCOUNT_KEY_PROD
-
-    if: ${{ github.ref == format('refs/heads/{0}', matrix.branch) }}
 
     steps:
     - name: Checkout code
