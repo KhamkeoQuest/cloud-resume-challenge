@@ -14,3 +14,8 @@ variable "domain" {
   type        = string
   description = "The base domain (e.g., khamkeokhongsaly.com)"
 }
+
+variable "origin_hostname" {
+  description = "The Azure static site hostname (e.g., saresumeprodstatic.z5.web.core.windows.net)"
+  type        = string
+}

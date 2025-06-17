@@ -1,3 +1,4 @@
+// cloudflare/worker.js.tpl
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
@@ -14,6 +15,5 @@ async function handleRequest(request) {
   })
 
   modifiedRequest.headers.set('Host', "${origin_hostname}")
-
   return fetch(modifiedRequest)
 }
