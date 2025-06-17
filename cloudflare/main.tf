@@ -2,10 +2,13 @@ data "cloudflare_zone" "main" {
   name = var.domain
 }
 
-resource "cloudflare_workers_script" "resume_forwarder" {
-  name       = "resume-forwarder"
+resource "cloudflare_worker_script" "resume_forwarder" {
+  name    = "resume-forwarder"
   account_id = var.cloudflare_account_id
-  content    = file("${path.module}/worker.js")
+
+  content = templatefile("${path.module}/worker.js.tpl", {
+    origin_hostname = trimreplace(module.static_storage.static_site_url, ["https://", "/"], "")
+}
 }
 
 

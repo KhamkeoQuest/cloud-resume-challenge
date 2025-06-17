@@ -4,10 +4,7 @@ addEventListener('fetch', event => {
 
 async function handleRequest(request) {
   const url = new URL(request.url)
-
-  // Forward all traffic to Azure Blob Static Website
-  // currently we doing production
-  url.hostname = 'stresumeprod.z5.web.core.windows.net' 
+  url.hostname = "${origin_hostname}"
 
   const modifiedRequest = new Request(url.toString(), {
     method: request.method,
@@ -16,8 +13,7 @@ async function handleRequest(request) {
     redirect: 'follow'
   })
 
-  // Blob storage expects this exact host header
-  modifiedRequest.headers.set('Host', 'stresumeprod.z5.web.core.windows.net')
+  modifiedRequest.headers.set('Host', "${origin_hostname}")
 
   return fetch(modifiedRequest)
 }
