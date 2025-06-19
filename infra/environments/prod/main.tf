@@ -75,25 +75,28 @@ module "cosmosdb" {
   source              = "../../modules/cosmosdb"
   project_name        = module.shared.project_name
   environment         = var.environment
-  resource_group_name = azurerm_resource_group.rg.name
   location            = module.shared.locations[var.environment]
-  tags                = module.shared.tags[var.environment]
   short_location      = module.normalized_location.short_location
+  resource_group_name = azurerm_resource_group.rg.name
+  tags                = module.shared.tags[var.environment]
 }
+
 
 # This module creates an Azure Function App with a consumption plan, storage account, and Application Insights.
 module "function_app" {
-  source                  = "../../modules/function_app"
-  project_name            = module.shared.project_name
-  environment             = var.environment
-  resource_group_name     = azurerm_resource_group.rg.name
-  location                = module.shared.locations[var.environment]
-  tags                    = module.shared.tags[var.environment]
-  cosmosdb_endpoint       = module.cosmosdb.cosmosdb_endpoint
-  cosmosdb_primary_key    = module.cosmosdb.cosmosdb_primary_key
-  short_location          = module.normalized_location.short_location
-  app_insights_instrumentation_key = azurerm_application_insights.app_insights.instrumentation_key
+  source              = "../../modules/function_app"
+  project_name        = module.shared.project_name
+  environment         = var.environment
+  location            = module.shared.locations[var.environment]
+  short_location      = module.normalized_location.short_location
+  resource_group_name = azurerm_resource_group.rg.name
+  tags                = module.shared.tags[var.environment]
+
+  cosmosdb_endpoint    = module.cosmosdb.cosmosdb_endpoint
+  cosmosdb_primary_key = module.cosmosdb.cosmosdb_primary_key
+
 }
+
 
 
 

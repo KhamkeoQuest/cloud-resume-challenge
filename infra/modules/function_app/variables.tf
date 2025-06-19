@@ -14,26 +14,21 @@ variable "resource_group_name" {
   type = string
 }
 
-
-
-variable "tags" {
-  type = map(string)
-}
-
-variable "cosmosdb_endpoint" {
-  type = string
-  description = "Cosmos DB endpoint"
-}
-
-variable "cosmosdb_primary_key" {
-  type = string
-  description = "Cosmos DB primary key"
-}
-
 variable "short_location" {
   type = string
 }
 
-variable "app_insights_instrumentation_key" {
-  type = string
+variable "cosmosdb_endpoint" {
+  description = "Cosmos DB endpoint"
+  type        = string
+}
+
+variable "cosmosdb_primary_key" {
+  description = "Cosmos DB primary key"
+  type        = string
+}
+
+variable "tags" {
+  description = "Tags for Azure resources"
+  type        = map(string)
 }
