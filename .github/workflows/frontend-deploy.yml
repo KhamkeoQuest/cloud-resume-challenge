@@ -28,10 +28,17 @@ jobs:
             storage_account_key: AZURE_STORAGE_ACCOUNT_KEY_PROD
 
     steps:
+    - name: Check if branch matches environment
+      if: github.ref == format('refs/heads/{0}', matrix.branch)
+      run: 'echo "Branch matched for env: ${{ matrix.env }}"'
+
+
     - name: Checkout code
+      if: github.ref == format('refs/heads/{0}', matrix.branch)
       uses: actions/checkout@v3
 
-    - name: Upload to Azure Blob
+    - name: Upload to Azure Blob Storage
+      if: github.ref == format('refs/heads/{0}', matrix.branch)
       uses: azure/cli@v1
       with:
         inlineScript: |
@@ -42,6 +49,7 @@ jobs:
             --auth-mode key \
             --account-key ${{ secrets[matrix.storage_account_key] }} \
             --overwrite
+
 
     - name: Invalidate CDN (optional)
       if: false
