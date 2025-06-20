@@ -18,24 +18,26 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Processing visitor count request.')
 
     item_id = "counter"
-    partition_key = "counter"  # this matches your schema's partitionKey path
+    partition_key = item_id  # now same as id and matches container's /id partition key
 
     try:
+        logging.info("Reading item from Cosmos DB")
         item_response = container.read_item(item=item_id, partition_key=partition_key)
         item_response['count'] += 1
         container.replace_item(item=item_response, body=item_response)
         logging.info(f"Existing item updated. New count: {item_response['count']}")
     except Exception as e:
-        logging.warning(f"Item not found, initializing counter: {e}")
+        logging.warning(f"Item not found or error: {e}")
         item_response = {
             "id": item_id,
-            "partitionKey": partition_key,
             "count": 1
         }
-        container.create_item(body=item_response)
-        logging.info("New item created in Cosmos DB.")
-        logging.info(f"Visitor count: {item_response['count']}")
-    
+        try:
+            container.create_item(body=item_response)
+            logging.info("New item created in Cosmos DB.")
+        except Exception as create_error:
+            logging.error(f"Failed to create item: {create_error}")
+            return func.HttpResponse("Error creating counter item.", status_code=500)
 
     return func.HttpResponse(
         body=f'{{"count": {item_response["count"]}}}',

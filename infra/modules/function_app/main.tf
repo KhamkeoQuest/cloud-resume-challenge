@@ -47,7 +47,12 @@ resource "azurerm_linux_function_app" "function_app" {
     "APPLICATIONINSIGHTS_CONNECTION_STRING"   = azurerm_application_insights.appinsights.connection_string
   }
 
-  site_config {}
+  site_config {
+        # Add this to avoid the big problem with the function app not starting.
+      application_stack {
+        python_version = "3.10"
+      }
+  }
 
   identity {
     type = "SystemAssigned"

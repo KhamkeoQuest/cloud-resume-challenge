@@ -5,16 +5,6 @@ module "shared" {
   subscription_id = var.subscription_id
 }
 
-# This file sets up the development environment for the Cloud Resume Challenge using Azure resources.
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "rg-resume-prod"
-    storage_account_name = "saresumeprodstatic"
-    container_name       = "tfstate"
-    key                  = "prod.terraform.tfstate"
-  }
-}
-
 # This file sets up the production environment for the Cloud Resume Challenge using Azure resources.
 locals {
   frontend_path = "${path.root}/../../../frontend"

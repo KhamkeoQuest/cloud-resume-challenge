@@ -24,6 +24,7 @@ resource "azurerm_storage_blob" "index" {
   type                   = "Block"
   source                 = var.index_path
   content_type           = "text/html"
+  depends_on             = [azurerm_storage_account_static_website.static_website]
 }
 
 resource "azurerm_storage_blob" "error" {
@@ -32,6 +33,7 @@ resource "azurerm_storage_blob" "error" {
   storage_container_name = "$web"
   type                   = "Block"
   source                 = var.error_path
+  depends_on             = [azurerm_storage_account_static_website.static_website]
 }
 
 resource "azurerm_storage_blob" "resume" {
@@ -40,5 +42,6 @@ resource "azurerm_storage_blob" "resume" {
   storage_container_name = "$web"
   type                   = "Block"
   source                 = var.resume_path
+  depends_on             = [azurerm_storage_account_static_website.static_website]
 }
 

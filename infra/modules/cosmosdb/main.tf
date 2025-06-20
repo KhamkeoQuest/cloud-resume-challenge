@@ -44,5 +44,5 @@ resource "azurerm_cosmosdb_sql_container" "visitor_counter" {
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.cosmos_account.name
   database_name       = azurerm_cosmosdb_sql_database.resume_db.name
-  partition_key_paths = ["/partitionKey"]
+  partition_key_paths = ["/id"]
 }

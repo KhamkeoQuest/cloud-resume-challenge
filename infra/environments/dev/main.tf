@@ -7,16 +7,6 @@ module "shared" {
 
 
 # This file sets up the development environment for the Cloud Resume Challenge using Azure resources.
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "rg-resume-dev"
-    storage_account_name = "saresumedevstatic"
-    container_name       = "tfstate"
-    key                  = "dev.terraform.tfstate"
-  }
-}
-
-# This file sets up the development environment for the Cloud Resume Challenge using Azure resources.
 locals {
   frontend_path = "${path.root}/../../../frontend"
   index_path    = "${local.frontend_path}/index.html"
@@ -92,7 +82,6 @@ module "function_app" {
   cosmosdb_endpoint       = module.cosmosdb.cosmosdb_endpoint
   cosmosdb_primary_key    = module.cosmosdb.cosmosdb_primary_key
   short_location          = module.normalized_location.short_location
-  app_insights_instrumentation_key = azurerm_application_insights.app_insights.instrumentation_key
 }
 
 
